@@ -21,6 +21,26 @@ class CPU:
 
     def load(self):
         """Load a program into memory."""
+        address = 0
+        if len(sys.argv) != 2:
+            print("usage: comp.py filename")
+            sys.exit(1)
+
+        try:
+            with open(sys.argv[1]) as f:
+                for line in f:
+                    try:
+                        line = line.split("#",1)[0]
+                        line = int(line, 2)  # int() is base 10 by default, want it to start from line 2 because all zeros
+                        self.ram[address] = line
+                        address += 1
+                    except ValueError:
+                        pass
+
+        except FileNotFoundError:
+            print(f"Couldn't find file {sys.argv[1]}")
+            sys.exit(1)
+
 
         # address = 0
 
@@ -47,6 +67,9 @@ class CPU:
         if op == "ADD":
             self.reg[reg_a] += self.reg[reg_b]
         #elif op == "SUB": etc
+        elif op == "MUL":
+            self.reg[reg_a] *= self.reg[reg_b]
+
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -80,6 +103,7 @@ class CPU:
             0b10000010: 'LDI', # LDI R0,8
             0b01000111: 'PRN', # PRN R0
             0b00000001: 'HLT', # HLT
+            0b10100010: 'MUL', # MUL R0,R1 (from mult.ls8)
         }
 
         while running:
@@ -103,6 +127,14 @@ class CPU:
                 #this is the halt
                 running = False
 
+            elif instructions[i] == 'MUL':
+                reg_a = self.ram[self.pc + 1]
+                reg_b = self.ram[self.pc + 2]
+
+                self.alu('MUL', reg_a, reg_b)
+                self.pc += 3
+
+
             else:
                 print(f"Unknown instruction {i}")
 
@@ -115,7 +147,7 @@ class CPU:
 
 new_cpu = CPU()
 new_cpu.load()
-new_cpu.run()
+# new_cpu.run()
 
 
 #ls8-spec and training kit
