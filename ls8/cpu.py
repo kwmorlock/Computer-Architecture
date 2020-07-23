@@ -68,7 +68,7 @@ class CPU:
             self.reg[reg_a] += self.reg[reg_b]
         #elif op == "SUB": etc
         elif op == "MUL":
-            self.reg[reg_a] *= self.reg[reg_b]
+            self.reg[reg_a] *= self.reg[reg_b] #saving b into register a line 474 in ls8-spec
 
         else:
             raise Exception("Unsupported ALU operation")
@@ -103,7 +103,9 @@ class CPU:
             0b10000010: 'LDI', # LDI R0,8
             0b01000111: 'PRN', # PRN R0
             0b00000001: 'HLT', # HLT
-            0b10100010: 'MUL', # MUL R0,R1 (from mult.ls8)
+            0b10100010: 'MUL', # MUL R0,R1 (from mult.ls8 line 7)
+            0b01000101: 'PUSH', # PUSH R0
+            0b01000110: 'POP', # POP R0
         }
 
         while running:
@@ -156,3 +158,10 @@ new_cpu.load()
 
 #ram read and write in TK
 
+
+# python3 ls8.py examples/mult.ls8    this command is used in terminal and should return 72
+
+
+#stack has a push and pop, take from stack.ls8? 
+
+#bitwise operators
