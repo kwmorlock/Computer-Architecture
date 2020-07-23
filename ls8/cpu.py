@@ -206,7 +206,7 @@ class CPU:
 
 
 
-
+#mult.ls8
 
 # 10000010 # LDI R0,8 (Set the value of a register to an integer.)
 # 00000000
@@ -219,4 +219,43 @@ class CPU:
 # 00000001
 # 01000111 # PRN R0 (Print numeric value stored in the given register.)
 # 00000000
+# 00000001 # HLT (Halt the CPU (and exit the emulator).)
+
+
+
+
+
+
+#stack.ls8
+
+# 10000010 # LDI R0,1 (Set the value of a register to an integer.)
+# 00000000
+# 00000001 (1)
+# 10000010 # LDI R1,2 (Set the value of a register to an integer.)
+# 00000001
+# 00000010 (2)
+# 01000101 # PUSH R0 (Push the value in the given register on the stack.)
+# 00000000
+# 01000101 # PUSH R1 (Push the value in the given register on the stack.)
+# 00000001
+# 10000010 # LDI R0,3 (Set the value of a register to an integer.)
+# 00000000
+# 00000011 (3)
+# 01000110 # POP R0 (Pop the value at the top of the stack into the given register.)
+# 00000000
+# 01000111 # PRN R0 (Print numeric value stored in the given register.)
+# 00000000
+# 10000010 # LDI R0,4 (Set the value of a register to an integer.)
+# 00000000
+# 00000100 (4)
+# 01000101 # PUSH R0 (Push the value in the given register on the stack.)
+# 00000000
+# 01000110 # POP R2 (Pop the value at the top of the stack into the given register.)
+# 00000010
+# 01000110 # POP R1 (Pop the value at the top of the stack into the given register.)
+# 00000001
+# 01000111 # PRN R2 (Print numeric value stored in the given register.)
+# 00000010
+# 01000111 # PRN R1 (Print numeric value stored in the given register.)
+# 00000001
 # 00000001 # HLT (Halt the CPU (and exit the emulator).)
