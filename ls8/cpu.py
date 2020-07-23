@@ -1,6 +1,7 @@
 """CPU functionality."""
 
 import sys
+SP = 7
 
 class CPU:
     """Main CPU class."""
@@ -12,6 +13,9 @@ class CPU:
         self.ram = [0] * 256 #bytes of memory (256)
         self.reg = [0] * 8 # amount of registers that store data (8)
         self.pc = 0 #the counter, sorta like a pointer
+        
+
+        self.reg[SP] = 0xF4
 
     def ram_read(self, MAR): #MAR is memory address register holds memory / position
         return self.ram[MAR]
@@ -136,6 +140,37 @@ class CPU:
                 self.alu('MUL', reg_a, reg_b)
                 self.pc += 3
 
+            elif instructions[i] == 'PUSH':  # PUSH
+            # decrement stack pointer
+                self.reg[SP] -= 1
+
+                self.reg[SP] &= 0xff  # keep R7 in the range 00-FF
+
+                # get register value
+                reg_num = self.ram[self.pc + 1]
+                value = self.reg[reg_num]
+
+          # Store in memory
+                address_to_push_to = self.reg[SP]
+                self.ram[address_to_push_to] = value
+
+                self.pc += 2
+
+            elif instructions[i] == 'POP':  # POP
+          # Get value from RAM
+                address_to_pop_from = self.reg[SP]
+                value = self.ram[address_to_pop_from]
+
+             # Store in the given register
+                reg_num = self.ram[self.pc + 1]
+                self.reg[reg_num] = value
+
+                # Increment SP
+                self.reg[SP] += 1
+
+                self.pc += 2
+
+
 
             else:
                 print(f"Unknown instruction {i}")
@@ -147,8 +182,8 @@ class CPU:
 
 
 
-new_cpu = CPU()
-new_cpu.load()
+# new_cpu = CPU()
+# new_cpu.load()
 # new_cpu.run()
 
 
