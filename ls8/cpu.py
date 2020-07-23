@@ -1,7 +1,7 @@
 """CPU functionality."""
 
 import sys
-SP = 7
+SP = 7 #stack pointer
 
 class CPU:
     """Main CPU class."""
@@ -200,3 +200,23 @@ class CPU:
 #stack has a push and pop, take from stack.ls8? 
 
 #bitwise operators
+
+#python3 ls8.py examples/stack.ls8    day 3 command
+
+
+
+
+
+
+# 10000010 # LDI R0,8 (Set the value of a register to an integer.)
+# 00000000
+# 00001000  (This is 8)
+# 10000010 # LDI R1,9 (Set the value of a register to an integer.)
+# 00000001
+# 00001001    (This is 9)
+# 10100010 # MUL R0,R1 (Multiply the values in two registers together and store the result in registerA.)
+# 00000000
+# 00000001
+# 01000111 # PRN R0 (Print numeric value stored in the given register.)
+# 00000000
+# 00000001 # HLT (Halt the CPU (and exit the emulator).)
