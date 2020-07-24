@@ -351,6 +351,9 @@ class CPU:
 
 
 
+
+# Day 5 sctest
+
 # 10000010 # LDI R0,10  (Set the value of a register to an integer.)
 # 00000000 (index 0, spot 1)
 # 00001010. (10)
@@ -430,3 +433,97 @@ class CPU:
 # 00000011 (index 3, spot 4)
 # # TEST5 (address 73):
 # 00000001 # HLT (Halt the CPU (and exit the emulator).)
+
+
+
+
+
+
+
+### CMP
+
+# *This is an instruction handled by the ALU.*
+
+# `CMP registerA registerB`
+
+# Compare the values in two registers.
+
+# * If they are equal, set the Equal `E` flag to 1, otherwise set it to 0.
+
+# * If registerA is less than registerB, set the Less-than `L` flag to 1,
+#   otherwise set it to 0.
+
+# * If registerA is greater than registerB, set the Greater-than `G` flag
+#   to 1, otherwise set it to 0.
+
+# Machine code:
+# ```
+# 10100111 00000aaa 00000bbb
+# A7 0a 0b
+# ```
+
+
+
+
+## Flags
+
+# The flags register `FL` holds the current flags status. These flags
+# can change based on the operands given to the `CMP` opcode.
+
+# The register is made up of 8 bits. If a particular bit is set, that flag is "true".
+
+# `FL` bits: `00000LGE`
+
+# * `L` Less-than: during a `CMP`, set to 1 if registerA is less than registerB,
+#   zero otherwise.
+# * `G` Greater-than: during a `CMP`, set to 1 if registerA is greater than
+#   registerB, zero otherwise.
+# * `E` Equal: during a `CMP`, set to 1 if registerA is equal to registerB, zero
+#   otherwise.
+
+
+
+
+
+### JMP
+
+# `JMP register`
+
+# Jump to the address stored in the given register.
+
+# Set the `PC` to the address stored in the given register.
+
+# Machine code:
+# ```
+# 01010100 00000rrr
+# 54 0r
+# ```
+
+
+
+### JEQ
+
+# `JEQ register`
+
+# If `equal` flag is set (true), jump to the address stored in the given register.
+
+# Machine code:
+# ```
+# 01010101 00000rrr
+# 55 0r
+# ```
+
+
+
+### JNE
+
+# `JNE register`
+
+# If `E` flag is clear (false, 0), jump to the address stored in the given
+# register.
+
+# Machine code:
+# ```
+# 01010110 00000rrr
+# 56 0r
+# ```
