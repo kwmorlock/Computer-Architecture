@@ -13,6 +13,7 @@ class CPU:
         self.ram = [0] * 256 #bytes of memory (256)
         self.reg = [0] * 8 # amount of registers that store data (8)
         self.pc = 0 #the counter, sorta like a pointer
+        self.flag = 0b00000000
         
 
         self.reg[SP] = 0xF4
