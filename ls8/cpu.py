@@ -113,6 +113,10 @@ class CPU:
             0b01010000: 'CALL', #CALL R1
             0b00010001: 'RET', # RET
             0b10100000: 'ADD', # ADD R0,R0
+            0b10100111: 'CMP', # CMP R0,R1
+            0b01010101: 'JEQ', # JEQ R2
+            0b01010110: 'JNE', # JNE R2
+            0b01010100: 'JMP', # JMP R2
         }
 
         while running:
