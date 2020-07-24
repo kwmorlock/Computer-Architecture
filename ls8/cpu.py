@@ -110,6 +110,8 @@ class CPU:
             0b10100010: 'MUL', # MUL R0,R1 (from mult.ls8 line 7)
             0b01000101: 'PUSH', # PUSH R0
             0b01000110: 'POP', # POP R0
+            0b01010000: 'CALL', #CALL R1
+            0b00010001: 'RET', # RET
         }
 
         while running:
@@ -229,33 +231,75 @@ class CPU:
 #stack.ls8
 
 # 10000010 # LDI R0,1 (Set the value of a register to an integer.)
-# 00000000
+# 00000000      index 0
 # 00000001 (1)
 # 10000010 # LDI R1,2 (Set the value of a register to an integer.)
-# 00000001
+# 00000001       index 1
 # 00000010 (2)
 # 01000101 # PUSH R0 (Push the value in the given register on the stack.)
-# 00000000
+# 00000000       index 0
 # 01000101 # PUSH R1 (Push the value in the given register on the stack.)
-# 00000001
+# 00000001       index 1
 # 10000010 # LDI R0,3 (Set the value of a register to an integer.)
-# 00000000
+# 00000000       index 0
 # 00000011 (3)
 # 01000110 # POP R0 (Pop the value at the top of the stack into the given register.)
-# 00000000
+# 00000000       index 0
 # 01000111 # PRN R0 (Print numeric value stored in the given register.)
-# 00000000
+# 00000000       index 0
 # 10000010 # LDI R0,4 (Set the value of a register to an integer.)
-# 00000000
+# 00000000       index 0
 # 00000100 (4)
 # 01000101 # PUSH R0 (Push the value in the given register on the stack.)
-# 00000000
+# 00000000       index 0
 # 01000110 # POP R2 (Pop the value at the top of the stack into the given register.)
-# 00000010
+# 00000010       index 2
 # 01000110 # POP R1 (Pop the value at the top of the stack into the given register.)
-# 00000001
+# 00000001       index 1
 # 01000111 # PRN R2 (Print numeric value stored in the given register.)
-# 00000010
+# 00000010       index 2
 # 01000111 # PRN R1 (Print numeric value stored in the given register.)
-# 00000001
+# 00000001       index 1
 # 00000001 # HLT (Halt the CPU (and exit the emulator).)
+
+# reg = [4, 1, 4]
+# stack = []
+
+# 2
+# 4
+# 1
+
+
+# call.ls8
+
+# 10000010 # LDI R1,MULT2PRINT
+# 00000001
+# 00011000
+# 10000010 # LDI R0,10
+# 00000000
+# 00001010
+# 01010000 # CALL R1
+# 00000001
+# 10000010 # LDI R0,15
+# 00000000
+# 00001111
+# 01010000 # CALL R1
+# 00000001
+# 10000010 # LDI R0,18
+# 00000000
+# 00010010
+# 01010000 # CALL R1
+# 00000001
+# 10000010 # LDI R0,30
+# 00000000
+# 00011110
+# 01010000 # CALL R1
+# 00000001
+# 00000001 # HLT
+# # MULT2PRINT (address 24):
+# 10100000 # ADD R0,R0
+# 00000000
+# 00000000
+# 01000111 # PRN R0
+# 00000000
+# 00010001 # RET
