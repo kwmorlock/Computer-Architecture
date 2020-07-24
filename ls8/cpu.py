@@ -14,6 +14,7 @@ class CPU:
         self.reg = [0] * 8 # amount of registers that store data (8)
         self.pc = 0 #the counter, sorta like a pointer
         self.flag = 0b00000000
+        # `FL` bits: `00000LGE`
         
 
         self.reg[SP] = 0xF4
@@ -233,8 +234,6 @@ class CPU:
                     # `FL` bits: `00000LGE`
 
             elif instructions[i] == 'JNE':
-                # reg_a = self.ram[self.pc + 1]
-                # reg_b = self.ram[self.pc + 2]
                 if self.flag == 0b000000100:
                     self.pc = self.reg[reg_num]
                 elif self.flag == 0b00000010:
