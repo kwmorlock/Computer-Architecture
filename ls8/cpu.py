@@ -75,6 +75,12 @@ class CPU:
         elif op == "MUL":
             self.reg[reg_a] *= self.reg[reg_b] #saving b into register a line 474 in ls8-spec
 
+        elif op == 'CMP': #maybe
+            if reg_a == reg_b:
+                self.flag = 0b00000001
+            else:
+                self.flag = 0b00000000
+
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -211,6 +217,7 @@ class CPU:
             elif instructions[i] == 'CMP':
                 reg_a = self.ram[self.pc + 1]
                 reg_b = self.ram[self.pc + 2]
+                self.alu('CMP', reg_a, reg_b) #maybe
                 if self.reg[reg_a] == self.reg[reg_b]:
                     self.flag = 0b00000001
                     self.pc += 3
@@ -227,7 +234,11 @@ class CPU:
                 if self.flag == 0b00000001:
                     self.pc = self.reg[reg_a]
                 else:
-                    self.pc += 3
+                    self.pc += 2
+
+            elif instructions[i] == 'JNE':
+
+            elif instructions[i] == 'JMP':
 
             
 
