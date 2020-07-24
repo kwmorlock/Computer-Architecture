@@ -172,6 +172,31 @@ class CPU:
 
                 self.pc += 2
 
+            elif instructions == 'CALL':
+        # Get address of the next instruction
+                return_addr = pc + 2
+
+        # Push that on the stack
+                self.reg[SP] -= 1
+                address_to_push_to = self.reg[SP]
+                self.ram[address_to_push_to] = return_addr
+
+        # Set the PC to the subroutine address
+                reg_num = self.ram[pc + 1]
+                subroutine_addr = self.reg[reg_num]
+
+                pc = subroutine_addr
+
+            elif instructions == 'RET':
+        # Get return address from the top of the stack
+                address_to_pop_from = self.reg[SP]
+                return_addr = self.ram[address_to_pop_from]
+                self.reg[SP] += 1
+
+        # Set the PC to the return address
+                pc = return_addr
+
+
 
 
             else:
