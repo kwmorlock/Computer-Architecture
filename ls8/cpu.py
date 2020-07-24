@@ -264,7 +264,7 @@ class CPU:
 
 # 10000010 # LDI R0,1 (Set the value of a register to an integer.)
 # 00000000      index 0
-# 00000001 (1)
+# 00000001 (1) #value stored at that index
 # 10000010 # LDI R1,2 (Set the value of a register to an integer.)
 # 00000001       index 1
 # 00000010 (2)
@@ -304,14 +304,23 @@ class CPU:
 
 # call.ls8
 
+#0000 = 0
+#0001 = 1
+#0010 = 2
+#0100 = 4
+#1000 = 8
+#1001 = 9
+#0101 = 5
+
+
 # 10000010 # LDI R1,MULT2PRINT
-# 00000001
+# 00000001  (index1, second spot)
 # 00011000
 # 10000010 # LDI R0,10
-# 00000000
+# 00000000   (index 0, first spot)
 # 00001010
 # 01010000 # CALL R1
-# 00000001
+# 00000001   (index 1, second spot)
 # 10000010 # LDI R0,15
 # 00000000
 # 00001111
@@ -335,3 +344,89 @@ class CPU:
 # 01000111 # PRN R0
 # 00000000
 # 00010001 # RET
+
+
+
+#day 4 command python3 ls8.py examples/call.ls8
+
+
+
+# 10000010 # LDI R0,10  (Set the value of a register to an integer.)
+# 00000000 (index 0, spot 1)
+# 00001010. (10)
+# 10000010 # LDI R1,20 (Set the value of a register to an integer.)
+# 00000001 (index 1, spot 2)
+# 00010100 (20)
+# 10000010 # LDI R2,TEST1 (Set the value of a register to an integer.)
+# 00000010 (index 2, spot 3)
+# 00010011 (19)
+# 10100111 # CMP R0,R1 (Compare the values in two registers.)
+# 00000000 (index 0, spot 1)
+# 00000001 (1)
+# 01010101 # JEQ R2 (If `equal` flag is set (true), jump to the address stored in the given register.)
+# 00000010 (index 2, spot 3)
+# 10000010 # LDI R3,1 (Set the value of a register to an integer.)
+# 00000011 (index 3, spot 4)
+# 00000001 (1)
+# 01000111 # PRN R3 (Print numeric value stored in the given register.)
+# 00000011 (index 3, spot 4)
+# # TEST1 (address 19):
+# 10000010 # LDI R2,TEST2 (Set the value of a register to an integer.)
+# 00000010 (index 2, spot 3)
+# 00100000 (32)
+# 10100111 # CMP R0,R1 (Compare the values in two registers.)
+# 00000000 (index 0, spot 1)
+# 00000001 (1)
+# 01010110 # JNE R2 (If `E` flag is clear (false, 0), jump to the address stored in the given register)
+# 00000010 (index 2, spot 3)
+# 10000010 # LDI R3,2 (Set the value of a register to an integer.)
+# 00000011 (index 3, spot 4)
+# 00000010 (2)
+# 01000111 # PRN R3 (Print numeric value stored in the given register.)
+# 00000011 (index 3, spot 4)
+# # TEST2 (address 32):
+# 10000010 # LDI R1,10 (Set the value of a register to an integer.)
+# 00000001 (index 1, spot 2)
+# 00001010 (10)
+# 10000010 # LDI R2,TEST3 (Set the value of a register to an integer.)
+# 00000010 (index 2, spot 3)
+# 00110000 (48)
+# 10100111 # CMP R0,R1 (Compare the values in two registers.)
+# 00000000 (index 0, spot 1)
+# 00000001 (1)
+# 01010101 # JEQ R2 (If `equal` flag is set (true), jump to the address stored in the given register.)
+# 00000010 (index 2, spot 3)
+# 10000010 # LDI R3,3 (Set the value of a register to an integer.)
+# 00000011 (index 3, spot 4)
+# 00000011 (3)
+# 01000111 # PRN R3 (Print numeric value stored in the given register.)
+# 00000011 (index 3, spot 4)
+# # TEST3 (address 48):
+# 10000010 # LDI R2,TEST4 (Set the value of a register to an integer.)
+# 00000010 (index 2, spot 3)
+# 00111101 (61)
+# 10100111 # CMP R0,R1 (Compare the values in two registers.)
+# 00000000 (index 0, spot 1)
+# 00000001 (1)
+# 01010110 # JNE R2 (If `E` flag is clear (false, 0), jump to the address stored in the given register)
+# 00000010 (index 2, spot 3)
+# 10000010 # LDI R3,4 (Set the value of a register to an integer.)
+# 00000011 (index 3, spot 4)
+# 00000100 (4)
+# 01000111 # PRN R3 (Print numeric value stored in the given register.)
+# 00000011 (index 3, spot 4)
+# # TEST4 (address 61):
+# 10000010 # LDI R3,5 (Set the value of a register to an integer.)
+# 00000011 (index 3, spot 4)
+# 00000101 (5)
+# 01000111 # PRN R3 (Print numeric value stored in the given register.)
+# 00000011 (index 3, spot 4)
+# 10000010 # LDI R2,TEST5 (Set the value of a register to an integer.)
+# 00000010 (index 2, spot 3)
+# 01001001 (73)
+# 01010100 # JMP R2 (Jump to the address stored in the given register.)
+# 00000010 (index 2, spot 3)
+# 01000111 # PRN R3 (Print numeric value stored in the given register.)
+# 00000011 (index 3, spot 4)
+# # TEST5 (address 73):
+# 00000001 # HLT (Halt the CPU (and exit the emulator).)
