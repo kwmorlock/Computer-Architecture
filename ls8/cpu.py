@@ -112,6 +112,7 @@ class CPU:
             0b01000110: 'POP', # POP R0
             0b01010000: 'CALL', #CALL R1
             0b00010001: 'RET', # RET
+            0b10100000: 'ADD', # ADD R0,R0
         }
 
         while running:
@@ -172,9 +173,9 @@ class CPU:
 
                 self.pc += 2
 
-            elif instructions == 'CALL':
+            elif instructions[i] == 'CALL':
         # Get address of the next instruction
-                return_addr = pc + 2
+                return_addr = self.pc + 2
 
         # Push that on the stack
                 self.reg[SP] -= 1
@@ -182,25 +183,31 @@ class CPU:
                 self.ram[address_to_push_to] = return_addr
 
         # Set the PC to the subroutine address
-                reg_num = self.ram[pc + 1]
+                reg_num = self.ram[self.pc + 1]
                 subroutine_addr = self.reg[reg_num]
 
-                pc = subroutine_addr
+                self.pc = subroutine_addr
 
-            elif instructions == 'RET':
+            elif instructions[i] == 'RET':
         # Get return address from the top of the stack
                 address_to_pop_from = self.reg[SP]
                 return_addr = self.ram[address_to_pop_from]
                 self.reg[SP] += 1
 
         # Set the PC to the return address
-                pc = return_addr
+                self.pc = return_addr
 
-
+            elif instructions[i] == 'ADD':
+                reg_a = self.ram[self.pc + 1]
+                reg_b = self.ram[self.pc + 2]
+                self.alu('ADD', reg_a, reg_b)
+                self.pc += 3
+               
 
 
             else:
                 print(f"Unknown instruction {i}")
+                running = False
 
 
 
