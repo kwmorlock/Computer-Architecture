@@ -209,11 +209,28 @@ class CPU:
                 self.pc += 3
 
             elif instructions[i] == 'CMP':
-                if:
+                reg_a = self.ram[self.pc + 1]
+                reg_b = self.ram[self.pc + 2]
+                if self.reg[reg_a] == self.reg[reg_b]:
+                    self.flag = 0b00000001
+                    self.pc += 3
 
-                elif:
+                elif self.reg[reg_a] < self.reg[reg_b]:
+                    self.flag = 0b00000100
+                    self.pc += 3
 
+                elif self.reg[reg_a] > self.reg[reg_b]:
+                    self.flag = 0b00000010
+                    self.pc += 3
+
+            elif instructions[i] == 'JEQ':
+                if self.flag == 0b00000001:
+                    self.pc = self.reg[reg_a]
                 else:
+                    self.pc += 3
+
+            
+
                
 
 
@@ -231,6 +248,7 @@ class CPU:
 # new_cpu = CPU()
 # new_cpu.load()
 # new_cpu.run()
+
 
 
 #ls8-spec and training kit
