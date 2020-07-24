@@ -206,6 +206,13 @@ class CPU:
                 reg_b = self.ram[self.pc + 2]
                 self.alu('ADD', reg_a, reg_b)
                 self.pc += 3
+
+            elif instructions[i] == 'CMP':
+                if:
+
+                elif:
+
+                else:
                
 
 
