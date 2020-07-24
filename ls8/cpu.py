@@ -210,22 +210,22 @@ class CPU:
                 self.alu('ADD', reg_a, reg_b)
                 self.pc += 3
 
-            elif instructions[i] == 'CMP':
+            elif instructions[i] == 'CMP': #Compare the values in two registers.
                 reg_a = self.ram[self.pc + 1]
                 reg_b = self.ram[self.pc + 2]
-                if self.reg[reg_a] == self.reg[reg_b]:
+                if self.reg[reg_a] == self.reg[reg_b]: #If they are equal, set the Equal `E` flag to 1, otherwise set it to 0.
                     self.flag = 0b00000001
                     self.pc += 3
 
-                elif self.reg[reg_a] < self.reg[reg_b]:
+                elif self.reg[reg_a] < self.reg[reg_b]: #If registerA is less than registerB, set the Less-than `L` flag to 1, otherwise set it to 0.
                     self.flag = 0b00000100
                     self.pc += 3
 
-                elif self.reg[reg_a] > self.reg[reg_b]:
+                elif self.reg[reg_a] > self.reg[reg_b]: #If registerA is greater than registerB, set the Greater-than `G` flag to 1, otherwise set it to 0.
                     self.flag = 0b00000010
                     self.pc += 3
 
-            elif instructions[i] == 'JEQ':
+            elif instructions[i] == 'JEQ': #If `equal` flag is set (true), jump to the address stored in the given register.
                 if self.flag == 0b00000001:
                     self.pc = self.reg[reg_num]
                 else:
@@ -233,7 +233,7 @@ class CPU:
 
                     # `FL` bits: `00000LGE`
 
-            elif instructions[i] == 'JNE':
+            elif instructions[i] == 'JNE': #If `E` flag is clear (false, 0), jump to the address stored in the given register.
                 if self.flag == 0b000000100:
                     self.pc = self.reg[reg_num]
                 elif self.flag == 0b00000010:
@@ -242,8 +242,8 @@ class CPU:
                     self.pc += 2
 
 
-            elif instructions[i] == 'JMP':
-                self.pc = self.reg[reg_num]
+            elif instructions[i] == 'JMP': #Jump to the address stored in the given register.
+                self.pc = self.reg[reg_num] #Set the `PC` to the address stored in the given register.
 
             
 
