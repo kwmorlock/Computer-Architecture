@@ -214,19 +214,19 @@ class CPU:
                 reg_a = self.ram[self.pc + 1]
                 reg_b = self.ram[self.pc + 2]
                 if self.reg[reg_a] == self.reg[reg_b]: #If they are equal, set the Equal `E` flag to 1, otherwise set it to 0.
-                    self.flag = 0b00000001
+                    self.flag = 0b00000001 #flag E
                     self.pc += 3
 
                 elif self.reg[reg_a] < self.reg[reg_b]: #If registerA is less than registerB, set the Less-than `L` flag to 1, otherwise set it to 0.
-                    self.flag = 0b00000100
+                    self.flag = 0b00000100 #flag L
                     self.pc += 3
 
                 elif self.reg[reg_a] > self.reg[reg_b]: #If registerA is greater than registerB, set the Greater-than `G` flag to 1, otherwise set it to 0.
-                    self.flag = 0b00000010
+                    self.flag = 0b00000010  #flag G
                     self.pc += 3
 
             elif instructions[i] == 'JEQ': #If `equal` flag is set (true), jump to the address stored in the given register.
-                if self.flag == 0b00000001:
+                if self.flag == 0b00000001:  #flag E
                     self.pc = self.reg[reg_num]
                 else:
                     self.pc += 2
@@ -234,9 +234,9 @@ class CPU:
                     # `FL` bits: `00000LGE`
 
             elif instructions[i] == 'JNE': #If `E` flag is clear (false, 0), jump to the address stored in the given register.
-                if self.flag == 0b000000100:
+                if self.flag == 0b000000100:  #flag L
                     self.pc = self.reg[reg_num]
-                elif self.flag == 0b00000010:
+                elif self.flag == 0b00000010: #flag G
                     self.pc =self.reg[reg_num]
                 else:
                     self.pc += 2
